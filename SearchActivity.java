@@ -1,5 +1,7 @@
 package com.example.puspakbiswas.books;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,5 +21,8 @@ public class SearchActivity extends AppCompatActivity {
         String keyword = keywordText.getText().toString();
         String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword;
         Log.i("URL:",url);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 }
