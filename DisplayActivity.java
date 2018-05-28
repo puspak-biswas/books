@@ -1,30 +1,30 @@
-package com.example.puspakbiswas.books;
+    package com.example.puspakbiswas.books;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+    import android.widget.ArrayAdapter;
+    import android.widget.ListAdapter;
+    import android.widget.ListView;
 
-import java.util.ArrayList;
+    import java.util.ArrayList;
 
-public class DisplayActivity extends AppCompatActivity {
+    public class DisplayActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);
-        displayMethod();
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_display);
+            displayMethod();
+        }
+
+        public void displayMethod(){
+            ArrayList<Book> bookList = new ArrayList<Book>();
+            bookList.add(new Book("The idea of justice","Amartya Sen"));
+            bookList.add(new Book("The argumentative Indian","Amartya Sen"));
+
+            bookAdapter booksAdapter = new bookAdapter(this,bookList);
+            ListView booksView = (ListView) findViewById(R.id.list);
+            booksView.setAdapter(booksAdapter);
+        }
     }
-
-    public void displayMethod(){
-        ArrayList<books> bookList = new ArrayList<books>();
-        bookList.add(new books("The idea of justice"));
-        bookList.add(new books("The argumentative Indian"));
-
-        ArrayAdapter<books> booksAdapter = new ArrayAdapter<books>(this,0,bookList);
-        ListView booksView = (ListView) findViewById(R.id.list);
-        booksView.setAdapter(booksAdapter);
-    }
-}
 
