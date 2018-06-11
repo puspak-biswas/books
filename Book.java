@@ -7,9 +7,9 @@ package com.example.puspakbiswas.books;
 public class Book {
 
     private String mTitle;
-    private String mAuthor;
+    private ArrayList<String> mAuthor;
 
-    public Book(String t, String a){
+    public Book(String t, ArrayList<String> a){
 
         mTitle = t;
         mAuthor = a;
@@ -19,7 +19,7 @@ public class Book {
         return mTitle;
     }
 
-    public String getAuthor(){return mAuthor;}
+    public ArrayList<String> getAuthor(){return mAuthor;}
 
     public String toString(){
         return mTitle;
