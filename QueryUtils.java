@@ -23,6 +23,8 @@ public class QueryUtils {
         URL url = getURL(urlString);
         Log.i("CameBack","fro get url");
         String JsonResponse = makeHTTPRequest(url);
+        ArrayList<book> bookList = getBookList(JsonResponse);
+        
     }
 
     private static URL getURL(String urlString) {
@@ -81,5 +83,20 @@ public class QueryUtils {
             Log.e("QueryUtils","Error while readline"+e);
         }
         return bookBuilder.toString();
+    }
+    private static ArrayList<book> getBookList(String JsonResponse){
+        ArrayList<book> bookList = new ArrayList<book>;
+        JsonObject bookObject = new JsonObject(JsonResponse);
+        JSONArray bookArray = bookObject.getJSONArray("items");
+        for (i = 0; i<bookArray.length ; i++){
+          JSONObject item = bookArray.getJSONObject(i);
+          String title = item.getString("title");
+          JSONArray authors = item.getJSONArray("authors");
+          ArrayList<String> authorList = new ArrayList<String>;
+          (for j=0;j<authors.length;j++){
+            authorList.add(authors.getString(j));
+          }
+        bookList.add(new book( title,authorList);
+        }
     }
 }
