@@ -20,7 +20,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onSearch(View view){
        EditText keywordText = (EditText) findViewById(R.id.keyword);
        String keyword = keywordText.getText().toString();
-       String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword;
+       String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword+"&maxResults=1";
         Log.i("URL:",url);
         ExperimentClass task = new ExperimentClass();
         task.execute(url);
