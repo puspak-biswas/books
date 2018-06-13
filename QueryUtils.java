@@ -3,6 +3,10 @@ package com.example.puspakbiswas.books;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
@@ -23,8 +28,9 @@ public class QueryUtils {
         URL url = getURL(urlString);
         Log.i("CameBack","fro get url");
         String JsonResponse = makeHTTPRequest(url);
-        ArrayList<book> bookList = getBookList(JsonResponse);
-        
+        ArrayList<Book> bookList = getBookList(JsonResponse);
+        Book b = bookList.get(0);
+        Log.i("Hererere",b.getTitle());
     }
 
     private static URL getURL(String urlString) {
@@ -84,19 +90,26 @@ public class QueryUtils {
         }
         return bookBuilder.toString();
     }
-    private static ArrayList<book> getBookList(String JsonResponse){
-        ArrayList<book> bookList = new ArrayList<book>;
-        JsonObject bookObject = new JsonObject(JsonResponse);
-        JSONArray bookArray = bookObject.getJSONArray("items");
-        for (i = 0; i<bookArray.length ; i++){
-          JSONObject item = bookArray.getJSONObject(i);
-          String title = item.getString("title");
-          JSONArray authors = item.getJSONArray("authors");
-          ArrayList<String> authorList = new ArrayList<String>;
-          (for j=0;j<authors.length;j++){
-            authorList.add(authors.getString(j));
-          }
-        bookList.add(new book( title,authorList);
+
+    private static ArrayList<Book> getBookList(String JsonResponse) {
+        ArrayList<Book> bookList = new ArrayList<Book>();
+        try {
+            JSONObject bookObject = new JSONObject(JsonResponse);
+            JSONArray bookArray = bookObject.getJSONArray("items");
+            for(int i=0;i<bookArray.length();i++){
+                JSONObject item = bookArray.getJSONObject(i);
+                JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+                String title = volumeInfo.getString("title");
+                JSONArray author = volumeInfo.getJSONArray("authors");
+                ArrayList<String> authorList = new ArrayList<String>();
+                for(int j = 0; j< author.length();j++){
+                    authorList.add(author.getString(j));
+                }
+                bookList.add(new Book(title,authorList));
+            }
+        }catch(JSONException e){
+            Log.e("QueryUtils","Error parsing"+e);
         }
+        return bookList;
     }
 }
