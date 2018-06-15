@@ -23,7 +23,7 @@ import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
  */
 
 public class QueryUtils {
-    public static void fetchBookData(String urlString) {
+    public static ArrayList<Book> fetchBookData(String urlString) {
         Log.i("kielo", urlString);
         URL url = getURL(urlString);
         Log.i("CameBack","fro get url");
@@ -31,6 +31,7 @@ public class QueryUtils {
         ArrayList<Book> bookList = getBookList(JsonResponse);
         Book b = bookList.get(0);
         Log.i("Hererere",b.getTitle());
+        return bookList;
     }
 
     private static URL getURL(String urlString) {
