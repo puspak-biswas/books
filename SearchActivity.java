@@ -29,16 +29,24 @@ public class SearchActivity extends AppCompatActivity {
        // intent.setData(Uri.parse(url));
         //startActivity(intent);
     }
+    
+    private void callDisplayActivity(ArrayList<Book> bookList){
+        Intent intent = new Intent(SearchActivity.class,DisplayActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable("ARRAYLIST",(Serializable)bookList);
+        intent.putExtra("BUNDLE",args);
+        startActivity(intent);
+            
+    }
 
     class ExperimentClass extends AsyncTask<String,Void,String>{
 
-        protected String doInBackground(String... urls){
-            QueryUtils.fetchBookData(urls[0]);
-            String dum = "dummy";
-            return dum;
+        protected ArrayList<Book> doInBackground(String... urls){
+            ArrayList bookList = QueryUtils.fetchBookData(urls[0]);
+            return bookList;
         }
-        protected void onPostExecute(String dum){
-            Log.i("Dummy",dum);
+        protected void onPostExecute(ArrayList<Book> bookList){
+            callDisplayActivity(bookList);
         }
     }
 }
