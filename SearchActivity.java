@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class SearchActivity extends AppCompatActivity {
 
     @Override
@@ -20,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onSearch(View view){
        EditText keywordText = (EditText) findViewById(R.id.keyword);
        String keyword = keywordText.getText().toString();
-       String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword+"&maxResults=1";
+       String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword;
         Log.i("URL:",url);
         ExperimentClass task = new ExperimentClass();
         task.execute(url);
@@ -29,20 +32,19 @@ public class SearchActivity extends AppCompatActivity {
        // intent.setData(Uri.parse(url));
         //startActivity(intent);
     }
-    
-    private void callDisplayActivity(ArrayList<Book> bookList){
-        Intent intent = new Intent(SearchActivity.class,DisplayActivity.class);
+
+    public void callDisplayActivity(ArrayList<Book> bookList){
+        Intent intent = new Intent(this,DisplayActivity.class);
         Bundle args = new Bundle();
-        args.putSerializable("ARRAYLIST",(Serializable)bookList);
+        args.putSerializable("ARRAYLIST",bookList);
         intent.putExtra("BUNDLE",args);
         startActivity(intent);
-            
     }
 
-    class ExperimentClass extends AsyncTask<String,Void,String>{
+    class ExperimentClass extends AsyncTask<String,Void,ArrayList<Book>>{
 
         protected ArrayList<Book> doInBackground(String... urls){
-            ArrayList bookList = QueryUtils.fetchBookData(urls[0]);
+            ArrayList<Book> bookList = QueryUtils.fetchBookData(urls[0]);
             return bookList;
         }
         protected void onPostExecute(ArrayList<Book> bookList){
