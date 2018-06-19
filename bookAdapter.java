@@ -29,11 +29,20 @@ public class bookAdapter extends ArrayAdapter<Book> {
 
         Book book = getItem(position);
 
-        TextView title = (TextView) listBookView.findViewById(R.id.title);
-        title.setText(book.getTitle());
+        TextView textTitle = (TextView) listBookView.findViewById(R.id.title);
+        textTitle.setText(book.getTitle());
 
-        TextView author = (TextView) listBookView.findViewById(R.id.author);
-        author.setText(book.getAuthor());
+        TextView textAuthor = (TextView) listBookView.findViewById(R.id.author);
+        ArrayList<String> authorList = book.getAuthor();
+        String author="";
+        for(int i =0 ; i<authorList.size();i++){
+            if (i != 0){
+                author = author+"|"+authorList.get(i);
+            }else{
+                author = authorList.get(i);
+            }
+        }
+        textAuthor.setText(author);
 
         return listBookView;
     }
