@@ -25,7 +25,7 @@
         
         public Loader<ArrayList<Book>> onCreateLoader(int i, Bundle bundle) {
         // TODO: Create a new loader for the given URL
-        Loader<ArrayList<Earthquake>> loader = new EarthquakeLoader(this,queryString);
+        Loader<ArrayList<Book>> loader = new BookLoader(this,queryString);
         return loader;
     }
         
