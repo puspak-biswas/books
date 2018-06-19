@@ -25,30 +25,29 @@ public class SearchActivity extends AppCompatActivity {
        String keyword = keywordText.getText().toString();
        String url = "https://www.googleapis.com/books/v1/volumes?q="+keyword;
         Log.i("URL:",url);
-        ExperimentClass task = new ExperimentClass();
-        task.execute(url);
-       // Log.i("URL:",url);
-        //Intent intent = new Intent(this,DisplayActivity.class);
-       // intent.setData(Uri.parse(url));
-        //startActivity(intent);
-    }
-
-    public void callDisplayActivity(ArrayList<Book> bookList){
+       // ExperimentClass task = new ExperimentClass();
+       // task.execute(url);
         Intent intent = new Intent(this,DisplayActivity.class);
-        Bundle args = new Bundle();
-        args.putSerializable("ARRAYLIST",bookList);
-        intent.putExtra("BUNDLE",args);
+        intent.putExtra("StringUrl",url);
         startActivity(intent);
     }
 
-    class ExperimentClass extends AsyncTask<String,Void,ArrayList<Book>>{
+    //public void callDisplayActivity(ArrayList<Book> bookList){
+    ////    Intent intent = new Intent(this,DisplayActivity.class);
+    //    Bundle args = new Bundle();
+    //    args.putSerializable("ARRAYLIST",bookList);
+    //    intent.putExtra("BUNDLE",args);
+    //    startActivity(intent);
+    //}
 
-        protected ArrayList<Book> doInBackground(String... urls){
-            ArrayList<Book> bookList = QueryUtils.fetchBookData(urls[0]);
-            return bookList;
-        }
-        protected void onPostExecute(ArrayList<Book> bookList){
-            callDisplayActivity(bookList);
-        }
-    }
+    //class ExperimentClass extends AsyncTask<String,Void,ArrayList<Book>>{
+
+     //   protected ArrayList<Book> doInBackground(String... urls){
+     //       ArrayList<Book> bookList = QueryUtils.fetchBookData(urls[0]);
+     //       return bookList;
+     //   }
+     //   protected void onPostExecute(ArrayList<Book> bookList){
+     //       callDisplayActivity(bookList);
+     //   }
+    //}
 }
