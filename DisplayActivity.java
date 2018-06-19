@@ -16,9 +16,9 @@
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_display);
             Intent intent = getIntent();
-            Bundle args = intent.getBundleExtra("BUNDLE");
-            ArrayList<Book> bookList = (ArrayList<Book>) args.getSerializable("ARRAYLIST");
-            displayMethod(bookList);
+            String url = intent.getExtras.getString("StringUrl");
+            ExperimentClass task = new ExperimentClass();
+            task.execute(url);
         }
 
         public void displayMethod(ArrayList<Book> bookList){
@@ -29,6 +29,15 @@
             bookAdapter booksAdapter = new bookAdapter(this,bookList);
             ListView booksView = (ListView) findViewById(R.id.list);
             booksView.setAdapter(booksAdapter);
+        }
+        class ExperimentClass extends AsyncTask<String,Void,ArrayList<Book>>{
+
+        protected ArrayList<Book> doInBackground(String... urls){
+            ArrayList<Book> bookList = QueryUtils.fetchBookData(urls[0]);
+            return bookList;
+        }
+        protected void onPostExecute(ArrayList<Book> bookList){
+            displayMethod(bookList);
         }
     }
 
