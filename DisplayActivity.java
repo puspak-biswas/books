@@ -1,5 +1,6 @@
     package com.example.puspakbiswas.books;
 
+    import android.content.Intent;
     import android.support.v7.app.AppCompatActivity;
     import android.os.Bundle;
     import android.widget.ArrayAdapter;
@@ -21,7 +22,7 @@
         }
 
         public void displayMethod(ArrayList<Book> bookList){
-            ArrayList<Book> bookList = new ArrayList<Book>();
+            //ArrayList<Book> bookList = new ArrayList<Book>();
             //bookList.add(new Book("The idea of justice","Amartya Sen"));
             //bookList.add(new Book("The argumentative Indian","Amartya Sen"));
 
