@@ -53,8 +53,8 @@ public class QueryUtils {
         HttpURLConnection bookConnection = null;
         try {
             bookConnection = (HttpURLConnection) url.openConnection();
-            bookConnection.setReadTimeout(1000);
-            bookConnection.setConnectTimeout(1500);
+            bookConnection.setReadTimeout(3000);
+            bookConnection.setConnectTimeout(3000);
             bookConnection.setRequestMethod("GET");
             bookConnection.connect();
             if(bookConnection.getResponseCode() == 200){
