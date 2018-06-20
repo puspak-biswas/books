@@ -17,6 +17,7 @@
 
         private String URL;
         private bookAdapter mAdapter;
+        private TextView mEmptyTextView;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@
             mAdapter = new bookAdapter(this,new ArrayList<Book>());
             ListView booksView = (ListView) findViewById(R.id.list);
             booksView.setAdapter(mAdapter);
+            mEmptyTextView = (TextView) findViewById(R.id.empty_View);
+            booksView.setEmptyView(mEmptyTextView);
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(0, null, this);
         }
@@ -39,6 +42,8 @@
         public void onLoadFinished(Loader<ArrayList<Book>> loader,ArrayList<Book> bookList){
             if (bookList != null && !bookList.isEmpty()) {
                 mAdapter.addAll(bookList);
+            }else{
+            mEmptyTextView.setText("No books found");
             }
         }
 
