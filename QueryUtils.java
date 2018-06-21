@@ -29,8 +29,6 @@ public class QueryUtils {
         Log.i("CameBack","fro get url");
         String JsonResponse = makeHTTPRequest(url);
         ArrayList<Book> bookList = getBookList(JsonResponse);
-        Book b = bookList.get(0);
-        Log.i("Hererere",b.getTitle());
         return bookList;
     }
 
@@ -53,8 +51,8 @@ public class QueryUtils {
         HttpURLConnection bookConnection = null;
         try {
             bookConnection = (HttpURLConnection) url.openConnection();
-            bookConnection.setReadTimeout(3000);
-            bookConnection.setConnectTimeout(3000);
+            bookConnection.setReadTimeout(1000000000);
+            bookConnection.setConnectTimeout(1000000000);
             bookConnection.setRequestMethod("GET");
             bookConnection.connect();
             if(bookConnection.getResponseCode() == 200){
@@ -96,17 +94,24 @@ public class QueryUtils {
         ArrayList<Book> bookList = new ArrayList<Book>();
         try {
             JSONObject bookObject = new JSONObject(JsonResponse);
+            int totalItems = bookObject.getInt("totalItems");
+            if (totalItems>0){
             JSONArray bookArray = bookObject.getJSONArray("items");
-            for(int i=0;i<bookArray.length();i++){
+            for(int i=0;i<bookArray.length();i++) {
                 JSONObject item = bookArray.getJSONObject(i);
                 JSONObject volumeInfo = item.getJSONObject("volumeInfo");
                 String title = volumeInfo.getString("title");
-                JSONArray author = volumeInfo.getJSONArray("authors");
                 ArrayList<String> authorList = new ArrayList<String>();
-                for(int j = 0; j< author.length();j++){
-                    authorList.add(author.getString(j));
+                if (volumeInfo.has("authors")) {
+                    JSONArray author = volumeInfo.getJSONArray("authors");
+                    for (int j = 0; j < author.length(); j++) {
+                        authorList.add(author.getString(j));
+                    }
+                } else {
+                    authorList.add("No author information");
                 }
-                bookList.add(new Book(title,authorList));
+                bookList.add(new Book(title, authorList));
+            }
             }
         }catch(JSONException e){
             Log.e("QueryUtils","Error parsing"+e);
