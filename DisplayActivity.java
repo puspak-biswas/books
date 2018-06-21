@@ -33,9 +33,17 @@
             booksView.setAdapter(mAdapter);
             mEmptyView = (TextView) findViewById(R.id.empty_view);
             booksView.setEmptyView(mEmptyView);
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(0, null, this);
-        }
+            ConnectivityManager cm =(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                                   activeNetwork.isConnected();
+            if(isConnected){
+                LoaderManager loaderManager = getLoaderManager();
+                loaderManager.initLoader(0, null, this);
+            }else{("No internet connection");
+                mEmptyView.setText
+            }
+         }
 
         public Loader<ArrayList<Book>> onCreateLoader(int i, Bundle bundle){
             Log.i("TABLO","on create loader");
